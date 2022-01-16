@@ -5,12 +5,12 @@
   - [x] ALU
   - [x] Registers
 
-- [] Fantasy Language
+- [ ] Fantasy Language
   - [x] sum: summation
   - [x] sub: subtraction
   - [x] digits
-  - [] mul: multiplication
-  - [] div: division
+  - [ ] mul: multiplication
+  - [ ] div: division
 
 - [x] Fantasy Compiler
   - [x] Lexical Analyzer
