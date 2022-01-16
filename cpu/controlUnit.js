@@ -22,12 +22,9 @@ export function ControlUnit(alu, ram, registerMultiplexer, stackMultiplexer) {
   this.currentClock = null;
 }
 
-ControlUnit.prototype.run = function(clockSpeed = 1000) {
+ControlUnit.prototype.run = function(clockSpeed = 100) {
   this.currentClock = clock(() => {
-    this.setStage(CONTROL_UNIT_PHASES.fetching);
-    const currentInstructionAddress = this.stackPointer.getInstructionAddressRegister()
-    this.instructionRegister = this.ramPointer.read(currentInstructionAddress);
-    this.stackPointer.increaseInstructionAddressRegister();
+    this.instructionRegister = this.fetch();
 
     const { opcode, data } = this.decode(this.instructionRegister);
 
@@ -57,6 +54,15 @@ ControlUnit.prototype.run = function(clockSpeed = 1000) {
 ControlUnit.prototype.aluCompute = function(opcode, inputA, inputB) {
   this.setStage(CONTROL_UNIT_PHASES.executing);
   return this.aluPointer.compute(opcode, inputA, inputB);
+}
+
+ControlUnit.prototype.fetch = function() {
+  this.setStage(CONTROL_UNIT_PHASES.fetching);
+
+  const currentInstructionAddress = this.stackPointer.getInstructionAddressRegister()
+  this.stackPointer.increaseInstructionAddressRegister();
+
+  return this.ramPointer.read(currentInstructionAddress);
 }
 
 ControlUnit.prototype.decode = function(binaryData) {
