@@ -22,13 +22,16 @@ export function ControlUnit(alu, ram, registerMultiplexer, stackMultiplexer) {
   this.currentClock = null;
 }
 
-ControlUnit.prototype.run = function(clockSpeed = 100) {
+ControlUnit.prototype.run = function(finishedCallback, clockSpeed = 100) {
   this.currentClock = clock(() => {
     this.instructionRegister = this.fetch();
 
     const { opcode, data } = this.decode(this.instructionRegister);
 
     if (opcode === MNEMONICS[ASSEMBLY.halt]) {
+      this.ramPointer.write([this.registersPointer.getRegisterA()]);
+      finishedCallback();
+      
       this.reset();
     }
 
@@ -79,7 +82,7 @@ ControlUnit.prototype.setStage = function(stage) {
 }
 
 ControlUnit.prototype.reset = function() {
+  clearInterval(this.currentClock);
   this.stackPointer.resetInstructionAddressRegister();
   this.setStage(CONTROL_UNIT_PHASES.idle);
-  clearInterval(this.currentClock);
 }

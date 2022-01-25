@@ -7,4 +7,5 @@ const machineCode = compile(program);
 const ram = new RAM();
 const cpu = new CPU(ram);
 ram.write(machineCode);
-cpu.run();
+cpu.run()
+  .then(() => console.log(parseInt(ram.read(0), 2)));

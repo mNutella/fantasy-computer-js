@@ -16,5 +16,7 @@ export function CPU(ram) {
 }
 
 CPU.prototype.run = function() {
-  this.controlUnit.run();
+  return new Promise((resolve) => {
+    this.controlUnit.run(resolve);
+  })
 }
