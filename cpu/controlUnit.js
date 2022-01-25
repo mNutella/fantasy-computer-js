@@ -3,7 +3,7 @@ import {
   ASSEMBLY, 
   CONTROL_UNIT_PHASES, 
   MNEMONICS, 
-  REGISTER_OPCODES 
+  CPU_REGISTER_OPCODES 
 } from "../helpers/constants.js";
 import { clock } from "./clock.js";
 
@@ -32,7 +32,7 @@ ControlUnit.prototype.run = function(clockSpeed = 100) {
       this.reset();
     }
 
-    if (opcode in REGISTER_OPCODES) {
+    if (opcode in CPU_REGISTER_OPCODES) {
       this.setStage(CONTROL_UNIT_PHASES.executing);
 
       if (opcode === MNEMONICS[ASSEMBLY.loadA]) {
@@ -80,7 +80,6 @@ ControlUnit.prototype.setStage = function(stage) {
 
 ControlUnit.prototype.reset = function() {
   this.stackPointer.resetInstructionAddressRegister();
-  // TODO: output
-  console.log(this.registersPointer.getRegisterA(), parseInt(this.registersPointer.getRegisterA(), 2));
+  this.setStage(CONTROL_UNIT_PHASES.idle);
   clearInterval(this.currentClock);
 }

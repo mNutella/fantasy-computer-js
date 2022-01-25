@@ -41,7 +41,9 @@ export const MNEMONICS = {
 
 export const TOKENS_ASSEMBLY_MAP = {
   sum: ASSEMBLY.sum,
-  sub: ASSEMBLY.sub
+  sub: ASSEMBLY.sub,
+  mul: ASSEMBLY.mul,
+  div: ASSEMBLY.div
 }
 
 export const CONTROL_UNIT_PHASES = {
@@ -51,7 +53,7 @@ export const CONTROL_UNIT_PHASES = {
   idle: 'idle'
 }
 
-export const REGISTER_OPCODES = {
+export const CPU_REGISTER_OPCODES = {
   '0001': [ASSEMBLY.loadA],
   '0002': [ASSEMBLY.loadB]
 }
